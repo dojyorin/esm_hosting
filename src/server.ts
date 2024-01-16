@@ -13,6 +13,9 @@ export async function handleRequest(request:Request){
     if(pathname === "/"){
         return resRedirect("https://github.com/dojyorin/esm_hosting_git/blob/master/README.md");
     }
+    else if(pathname === "/target"){
+        return resContent(esmHost, "text/plain");
+    }
     else if(pathname.startsWith("/x/")){
         const [, owner, repo, ref, path] = pathname.match(/^\/x\/([\w.-]+)\/([\w.-]+)@([\w.-]+)\/([\w./-]+)$/) ?? [];
 
