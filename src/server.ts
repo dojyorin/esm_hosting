@@ -12,7 +12,7 @@ export async function handleRequest(request:Request){
     const {pathname, searchParams} = new URL(request.url);
 
     if(pathname === "/"){
-        return resRedirect("https://github.com/dojyorin/esm_hosting_git/blob/master/README.md");
+        return resRedirect("https://github.com/dojyorin/esm_hosting_git");
     }
     else if(pathname === "/target"){
         return resContent(esmHost, "text/plain");
