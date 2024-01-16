@@ -2,7 +2,6 @@ import {bundle} from "../deps.ts";
 import {resCode, resRedirect, resContent} from "./response.ts";
 
 const esmHost = Deno.env.get("ESM_HOST") ?? "https://github.com";
-const pathMatch = /^\/x\/([\w.-]+)\/([\w.-]+)@([\w.-]+)\/([\w./-]+)$/;
 
 export async function handleRequest(request:Request){
     if(request.method !== "GET"){
@@ -17,14 +16,20 @@ export async function handleRequest(request:Request){
     else if(pathname === "/target"){
         return resContent(esmHost, "text/plain");
     }
-    else if(pathMatch.test(pathname)){
-        const [, owner, repo, ref, path] = pathname.match(pathMatch) ?? [];
+    else if(pathname.startsWith("/x/")){
+        const [, owner, repo, ref, path] = pathname.match(/^\/x\/([\w.-]+)\/([\w.-]+)@([\w.-]+)\/([\w./-]+)$/) ?? [];
 
-        const {code} = await bundle(`${esmHost}/${owner}/${repo}/raw/${ref}/${path}`, {
-            minify: searchParams.has("minify")
-        });
+        try{
+            const {code} = await bundle(`${esmHost}/${owner}/${repo}/raw/${ref}/${path}`, {
+                minify: searchParams.has("minify")
+            });
 
-        return resContent(code, "text/javascript", true);
+            return resContent(code, "text/javascript", true);
+        }
+        catch(e){
+            console.error(e);
+            return resCode(400);
+        }
     }
 
     return resCode(404);
