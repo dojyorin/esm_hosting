@@ -13,7 +13,7 @@ export function resRedirect(path:string){
     });
 }
 
-export function resContent(body:BodyInit, type:string, cors?:boolean){
+export function resContent(body:BodyInit, type:string, cors?:true){
     return new Response(body, {
         headers: {
             "Content-Type": type,
