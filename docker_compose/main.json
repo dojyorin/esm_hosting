@@ -8,7 +8,7 @@
             "user": "nonroot",
             "restart": "always",
             "ports": [
-                "0.0.0.0:8421:8000"
+                "0.0.0.0:8000:8000"
             ],
             "volumes": [
                 "../:/home/nonroot/project:ro"
@@ -18,7 +18,9 @@
             },
             "command": [
                 "run",
-                "-A",
+                "--allow-net",
+                "--allow-read",
+                "--allow-env",
                 "/home/nonroot/project/main.ts"
             ]
         }
