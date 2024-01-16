@@ -1,7 +1,7 @@
-import {bundle, envGet} from "../deps.ts";
+import {bundle} from "../deps.ts";
 import {resCode, resRedirect, resContent} from "./response.ts";
 
-const remote = envGet("ESM_HOST", "string", false) ?? "https://github.com";
+const esmHost = Deno.env.get("ESM_HOST") ?? "https://github.com";
 
 export async function handleRequest(request:Request){
     if(request.method !== "GET"){
@@ -17,7 +17,7 @@ export async function handleRequest(request:Request){
         const [, owner, repo, ref, path] = pathname.match(/^\/x\/([\w.-]+)\/([\w.-]+)@([\w.-]+)\/([\w./-]+)$/) ?? [];
 
         try{
-            const {code} = await bundle(`${remote}/${owner}/${repo}/raw/${ref}/${path}`, {
+            const {code} = await bundle(`${esmHost}/${owner}/${repo}/raw/${ref}/${path}`, {
                 minify: searchParams.has("minify")
             });
 
