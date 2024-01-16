@@ -1,0 +1,26 @@
+{
+    "name": "esm_hosting",
+
+    "services": {
+        "server": {
+            "image": "dojyorin/deno:latest",
+            "init": true,
+            "user": "nonroot",
+            "restart": "always",
+            "ports": [
+                "0.0.0.0:8421:8000"
+            ],
+            "volumes": [
+                "../:/home/nonroot/project:ro"
+            ],
+            "environment": {
+                "ESM_HOST": ""
+            },
+            "command": [
+                "run",
+                "-A",
+                "/home/nonroot/project/main.ts"
+            ]
+        }
+    }
+}

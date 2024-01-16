@@ -1,2 +1,3 @@
-# esm_hosting_git
+# **Easy ESM Hosting**
+
 esm_hosting_git
