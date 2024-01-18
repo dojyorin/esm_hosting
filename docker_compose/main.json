@@ -14,7 +14,7 @@
                 "../:/home/nonroot/project:ro"
             ],
             "environment": {
-                "ESM_HOST": ""
+                "ESMH_TARGET": ""
             },
             "command": [
                 "run",
