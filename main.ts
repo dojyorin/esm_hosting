@@ -25,10 +25,17 @@ await Deno.serve({
     const {pathname, searchParams} = new URL(url);
 
     if(pathname === "/"){
-        return resContent("README: https://github.com/dojyorin/esm_hosting", "text/plain");
+        return resContent(/*html*/`
+            <!doctype html>
+            <title>ESM Hosting</title>
+            <h1>ESM Hosting</h1>
+            <div>See <a href="https://github.com/dojyorin/esm_hosting">GitHub</a> for more info.</div>
+        `, "text/html");
     }
-    else if(pathname === "/target"){
-        return resContent(envTarget, "text/plain");
+    else if(pathname === "/status"){
+        return resContent(JSON.stringify({
+            target: envTarget
+        }), "application/json");
     }
     else if(pathname.startsWith("/x/")){
         const [, owner, repo, ref, path] = pathname.match(/^\/x\/([\w.-]+)\/([\w.-]+)@([\w.-]+)\/([\w./-]+)$/) ?? [];

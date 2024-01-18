@@ -42,20 +42,16 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
 
 **Response**
 
-- Code: `303`
-- Redirect: `https://github.com/dojyorin/esm_hosting_git`
+- Type: `text/html`
+- Body: Index page.
 
-Redirect to this repository.
-
-### `GET /target`
+### `GET /status`
 
 **Response**
 
-- Code: `200`
-- Type: `text/plain`
-- Body: Target URL
-
-Return URL of Git hosting service targeted by current instance.
+- Type: `application/json`
+- Body: Current instance status.
+    - `target` ... URL of Git hosting service.
 
 ### `GET /x/(:owner)/(:repo)@(:ref)/(:path)(?minify)`
 
@@ -71,13 +67,12 @@ Return URL of Git hosting service targeted by current instance.
 
 **Response**
 
-- Code: `200`
 - Type: `text/javascript`
 - Body: ESM source code.
 
 # Example
 ```html
 <script>
-    import * as util from "http://127.0.0.1:9000/x/dojyorin/deno_simple_utility@v1.0.0/mod.ts";
+    import * as util from "http://127.0.0.1:8000/x/dojyorin/deno_simple_utility@v1.0.0/mod.ts";
 </script>
 ```
