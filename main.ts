@@ -9,6 +9,7 @@ await Deno.serve({
     key: (v => v && Deno.readTextFileSync(v))(Deno.env.get("ESMH_TLS_KEY")),
     cert: (v => v && Deno.readTextFileSync(v))(Deno.env.get("ESMH_TLS_CERT")),
     onListen({hostname, port}){
+        console.info("Server start.");
         console.info("Listen:", `${hostname}:${port}`);
         console.info("Target:", envTarget);
     },
@@ -16,12 +17,12 @@ await Deno.serve({
         console.error(e);
         return resCode(500);
     }
-}, async(request)=>{
-    if(request.method !== "GET"){
+}, async({method, url})=>{
+    if(method !== "GET"){
         return resCode(405);
     }
 
-    const {pathname, searchParams} = new URL(request.url);
+    const {pathname, searchParams} = new URL(url);
 
     if(pathname === "/"){
         return resRedirect("https://github.com/dojyorin/esm_hosting_git");
