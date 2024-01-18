@@ -6,10 +6,12 @@ Deliver ESM from git repository.
 It bundle ESM source code that exists on Git repository and provides to web browsers.
 Even if specify raw URL of repository to `import`, will be rejected by SOP, so need like this reverse proxy.
 
-ESM bundler uses `denoland/deno_emit`, TypeScript is transpiled when bundled, so can directly specify `.ts` file.
+ESM bundler uses [`denoland/deno_emit`](https://github.com/denoland/deno_emit), TypeScript is transpiled when bundled, so can directly specify `.ts` file.
 
 You can select Git hosting service to connect to when starting your server.
 For example, you can connect to an on-premises environment such as GitHub or GitLab within company and build an ESM hosting environment for internal use.
+
+This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://deno.land/x).
 
 # Execution
 ```sh
@@ -18,10 +20,20 @@ For example, you can connect to an on-premises environment such as GitHub or Git
 
 # for Local
 ./script/start_local.sh
+
+# for Local (ignore certificate)
+./script/start_local.sh unsafe
 ```
 
 # Environment
-- `ESM_HOST` ... URL of Git hosting service. If not specified, the default value (`https://github.com`) will be applied.
+- `ESMH_HOST` ... Listen hostname.
+    - default: `127.0.0.1`
+- `ESMH_PORT` ... Listen port.
+    - default: `9000`
+- `ESMH_TLSKEY` ... Private key when enabling TLS.
+- `ESMH_TLSCER` ... Certificate when enabling TLS.
+- `ESMH_TARGET` ... Git hosting service URL.
+    - default: `https://github.com`
 
 # API
 ### `GET /`
@@ -39,19 +51,21 @@ Redirect to this repository.
 
 - Code: `200`
 - Type: `text/plain`
-- Body: target
+- Body: Target URL
+
+Return URL of Git hosting service targeted by current instance.
 
 ### `GET /x/(:owner)/(:repo)@(:ref)/(:path)(?minify)`
 
 **Request**
 
 - Path
-    - `:owner` ... owner name
-    - `:repo` ... repository name
-    - `:ref` ... tag or branch name
-    - `:path` ... path to ESM file
+    - `:owner` ... Owner name
+    - `:repo` ... Repository name
+    - `:ref` ... Tag name (or branch name)
+    - `:path` ... Path to file
 - Query
-    - `minify` (option) ... Minify ESM source code
+    - `minify` (option) ... minify source code
 
 **Response**
 
@@ -62,6 +76,6 @@ Redirect to this repository.
 # Example
 ```html
 <script>
-    import * as util from "http://127.0.0.1:8000/x/dojyorin/deno_simple_utility@v1.0.0/mod.ts";
+    import * as util from "http://127.0.0.1:9000/x/dojyorin/deno_simple_utility@v1.0.0/mod.ts";
 </script>
 ```
