@@ -38,21 +38,6 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
     - Default: `https://github.com`
 
 # API
-### `GET /`
-
-**Response**
-
-- Type: `text/html`
-- Body: Index page.
-
-### `GET /status`
-
-**Response**
-
-- Type: `application/json`
-- Body: Current instance status.
-    - `target` ... URL of Git hosting service.
-
 ### `GET /x/(:owner)/(:repo)@(:ref)/(:path)(?minify)`
 
 **Request**

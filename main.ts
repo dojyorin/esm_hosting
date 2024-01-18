@@ -29,13 +29,9 @@ await Deno.serve({
             <!doctype html>
             <title>ESM Hosting</title>
             <h1>ESM Hosting</h1>
-            <div>See <a href="https://github.com/dojyorin/esm_hosting">GitHub</a> for more info.</div>
+            <p>See <a href="https://github.com/dojyorin/esm_hosting">GitHub</a> for more info.</p>
+            <p>[Target] ${envTarget}</p>
         `, "text/html");
-    }
-    else if(pathname === "/status"){
-        return resContent(JSON.stringify({
-            target: envTarget
-        }), "application/json");
     }
     else if(pathname.startsWith("/x/")){
         const [, owner, repo, ref, path] = pathname.match(/^\/x\/([\w.-]+)\/([\w.-]+)@([\w.-]+)\/([\w./-]+)$/) ?? [];
