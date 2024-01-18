@@ -1,5 +1,5 @@
 import {bundle} from "./deps.ts";
-import {resCode, resRedirect, resContent} from "./src/response.ts";
+import {resCode, resContent} from "./src/response.ts";
 
 const envTarget = Deno.env.get("ESMH_TARGET") || "https://github.com";
 
@@ -25,7 +25,7 @@ await Deno.serve({
     const {pathname, searchParams} = new URL(url);
 
     if(pathname === "/"){
-        return resRedirect("https://github.com/dojyorin/esm_hosting_git");
+        return resContent("README: https://github.com/dojyorin/esm_hosting", "text/plain");
     }
     else if(pathname === "/target"){
         return resContent(envTarget, "text/plain");

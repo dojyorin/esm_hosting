@@ -4,15 +4,6 @@ export function resCode(code:number){
     });
 }
 
-export function resRedirect(path:string){
-    return new Response(undefined, {
-        status: 303,
-        headers: {
-            "Location": path
-        }
-    });
-}
-
 export function resContent(body:BodyInit, type:string, cors?:boolean){
     return new Response(body, {
         headers: {
