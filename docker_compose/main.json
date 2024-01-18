@@ -19,8 +19,9 @@
             "command": [
                 "run",
                 "--allow-net",
-                "--allow-read",
                 "--allow-env",
+                "--allow-read",
+                "--allow-write",
                 "/home/nonroot/project/main.ts"
             ]
         }
