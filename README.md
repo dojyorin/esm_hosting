@@ -22,18 +22,20 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
 ./script/start_local.sh
 
 # for Local (ignore certificate)
-./script/start_local.sh unsafe
+./script/start_local.sh --unsafe
 ```
 
 # Environment
 - `ESMH_HOST` ... Listen hostname.
-    - default: `127.0.0.1`
+    - Default: `127.0.0.1`
 - `ESMH_PORT` ... Listen port.
-    - default: `9000`
-- `ESMH_TLSKEY` ... Private key when enabling TLS.
-- `ESMH_TLSCER` ... Certificate when enabling TLS.
+    - Default: `8000`
+- `ESMH_TLS_KEY` ... Private key file path when enabling TLS.
+    - Format: PEM
+- `ESMH_TLS_CERT` ... Certificate file path when enabling TLS.
+    - Format: PEM
 - `ESMH_TARGET` ... Git hosting service URL.
-    - default: `https://github.com`
+    - Default: `https://github.com`
 
 # API
 ### `GET /`
@@ -65,7 +67,7 @@ Return URL of Git hosting service targeted by current instance.
     - `:ref` ... Tag name (or branch name)
     - `:path` ... Path to file
 - Query
-    - `minify` (option) ... minify source code
+    - `minify` (option) ... Minify source code
 
 **Response**
 

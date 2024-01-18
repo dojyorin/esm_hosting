@@ -5,9 +5,9 @@ const envTarget = Deno.env.get("ESMH_TARGET") || "https://github.com";
 
 await Deno.serve({
     hostname: Deno.env.get("ESMH_HOST") || "127.0.0.1",
-    port: (v => v ? Number(v) : 9000)(Deno.env.get("ESMH_PORT")),
-    key: (v => v && Deno.readTextFileSync(v))(Deno.env.get("ESMH_TLSKEY")),
-    cert: (v => v && Deno.readTextFileSync(v))(Deno.env.get("ESMH_TLSCER")),
+    port: (v => v ? Number(v) : 8000)(Deno.env.get("ESMH_PORT")),
+    key: (v => v && Deno.readTextFileSync(v))(Deno.env.get("ESMH_TLS_KEY")),
+    cert: (v => v && Deno.readTextFileSync(v))(Deno.env.get("ESMH_TLS_CERT")),
     onListen({hostname, port}){
         console.info("Listen:", `${hostname}:${port}`);
         console.info("Target:", envTarget);
