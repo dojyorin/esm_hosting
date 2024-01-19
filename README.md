@@ -22,7 +22,7 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
 ./script/start_local.sh
 
 # for Local (No verify TLS)
-# Use at your own risk!!
+# Use at your own risk!
 # Be sure to use for limited purpose. (ex: legacy intranet)
 ./script/start_local.sh --unsafe
 ```
