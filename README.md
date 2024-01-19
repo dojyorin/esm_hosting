@@ -1,6 +1,6 @@
 # **ESM Hosting**
 
-Deliver ESM from git repository.
+Deliver ESM from Git repository.
 
 # Details
 It bundle ESM source code that exists on Git repository and provides to web browsers.
@@ -37,7 +37,7 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
 - `ESMH_TARGET` ... Git hosting service URL.
     - Default: `https://github.com`
 
-# API
+# Specification
 ### `GET /x/(:owner)/(:repo)@(:ref)/(:path)(?minify)`
 
 **Request**
@@ -58,6 +58,6 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
 # Example
 ```html
 <script>
-    import * as util from "http://127.0.0.1:8000/x/dojyorin/deno_simple_utility@v1.0.0/mod.ts";
+    import * as x from "http://127.0.0.1:8000/x/dojyorin/deno_simple_utility@v1.0.0/mod.ts";
 </script>
 ```
