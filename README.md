@@ -43,12 +43,12 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
 **Request**
 
 - Path
-    - `:owner` ... Owner name
-    - `:repo` ... Repository name
-    - `:ref` ... Tag name (or branch name)
-    - `:path` ... Path to file
+    - `:owner` ... Owner name.
+    - `:repo` ... Repository name.
+    - `:ref` ... Tag name. (or branch name)
+    - `:path` ... Path to file.
 - Query
-    - `minify` (option) ... Minify source code
+    - `minify` (option) ... Minify source code.
 
 **Response**
 
