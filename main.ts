@@ -1,7 +1,23 @@
 import {bundle} from "./deps.ts";
-import {resCode, resContent} from "./src/response.ts";
 
 const envTarget = Deno.env.get("ESMH_TARGET") || "https://github.com";
+
+function resCode(code:number){
+    return new Response(undefined, {
+        status: code
+    });
+}
+
+function resContent(body:BodyInit, type:string, cors?:boolean){
+    return new Response(body, {
+        headers: {
+            "Content-Type": type,
+            ...cors && {
+                "Access-Control-Allow-Origin": "*"
+            }
+        }
+    });
+}
 
 await Deno.serve({
     hostname: Deno.env.get("ESMH_HOST") || "127.0.0.1",
