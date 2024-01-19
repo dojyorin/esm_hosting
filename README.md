@@ -3,7 +3,7 @@
 Minimal ESM hosting service.
 
 # Details
-It bundle ESM source code that on Git repository and provide to web browser.
+Bundle ESM code located on Git repository and serve to client.
 
 ESM bundler uses [`denoland/deno_emit`](https://github.com/denoland/deno_emit) and TypeScript is transpiled when bundling so can directly specify `.ts` file.
 
@@ -32,9 +32,9 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
     - Default: `127.0.0.1`
 - `ESMH_PORT` ... Listen port.
     - Default: `3080`
-- `ESMH_TLS_KEY` ... Private key file path when enabling TLS.
+- `ESMH_TLS_KEY` ... Private key file path when using TLS.
     - Format: PEM
-- `ESMH_TLS_CERT` ... Certificate file path when enabling TLS.
+- `ESMH_TLS_CERT` ... Certificate file path when using TLS.
     - Format: PEM
 - `ESMH_TARGET` ... Git hosting service URL.
     - Default: `https://github.com`
@@ -60,6 +60,6 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
 # Example
 ```html
 <script>
-    import * as x from "http://127.0.0.1:3080/x/dojyorin/deno_simple_utility@v1.0.0/mod.ts";
+    import * as mod from "http://127.0.0.1:3080/x/dojyorin/deno_simple_utility@v1.0.0/mod.ts";
 </script>
 ```
