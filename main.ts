@@ -21,7 +21,7 @@ function resContent(body:BodyInit, type:string, cors?:boolean){
 
 await Deno.serve({
     hostname: Deno.env.get("ESMH_HOST") || "127.0.0.1",
-    port: (v => v ? Number(v) : 8000)(Deno.env.get("ESMH_PORT")),
+    port: (v => v ? Number(v) : 3080)(Deno.env.get("ESMH_PORT")),
     key: (v => v && Deno.readTextFileSync(v))(Deno.env.get("ESMH_TLS_KEY")),
     cert: (v => v && Deno.readTextFileSync(v))(Deno.env.get("ESMH_TLS_CERT")),
     onListen({hostname, port}){

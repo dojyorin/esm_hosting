@@ -29,7 +29,7 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
 - `ESMH_HOST` ... Listen hostname.
     - Default: `127.0.0.1`
 - `ESMH_PORT` ... Listen port.
-    - Default: `8000`
+    - Default: `3080`
 - `ESMH_TLS_KEY` ... Private key file path when enabling TLS.
     - Format: PEM
 - `ESMH_TLS_CERT` ... Certificate file path when enabling TLS.
@@ -58,6 +58,6 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
 # Example
 ```html
 <script>
-    import * as x from "http://127.0.0.1:8000/x/dojyorin/deno_simple_utility@v1.0.0/mod.ts";
+    import * as x from "http://127.0.0.1:3080/x/dojyorin/deno_simple_utility@v1.0.0/mod.ts";
 </script>
 ```
