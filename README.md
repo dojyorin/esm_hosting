@@ -40,7 +40,7 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
     - Default: `https://github.com`
 
 # Specification
-### `GET /x/(:owner)/(:repo)@(:ref)/(:path)(?minify)`
+### `GET /x/(:owner)/(:repo)@(:ref)/(:path)(?minify)(&map)(&ts)`
 
 **Request**
 
