@@ -50,12 +50,12 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
     - `:ref` ... Tag name. (or branch name)
     - `:path` ... Path to file.
 - Query
-    - `minify` (option) ... Minify source code.
+    - `minify` (option) ... Minify ESM code.
 
 **Response**
 
 - Type: `text/javascript`
-- Body: ESM source code.
+- Body: ESM code.
 
 # Example
 ```html
