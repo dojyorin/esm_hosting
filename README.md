@@ -51,6 +51,8 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
     - `:path` ... Path to file.
 - Query
     - `minify` (option) ... Minify ESM code.
+    - `map` (option) ... Embed SourceMap.
+    - `ts` (option) ... Embed original TypeScript.
 
 **Response**
 

@@ -54,7 +54,11 @@ await Deno.serve({
 
         try{
             const {code} = await bundle(`${envTarget}/${owner}/${repo}/raw/${ref}/${path}`, {
-                minify: searchParams.has("minify")
+                minify: searchParams.has("minify"),
+                compilerOptions: {
+                    inlineSourceMap: searchParams.has("map"),
+                    inlineSources: searchParams.has("ts")
+                }
             });
 
             return resContent(code, "text/javascript", true);
