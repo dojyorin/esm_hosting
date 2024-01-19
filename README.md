@@ -3,13 +3,13 @@
 Minimal ESM hosting service.
 
 # Details
-It bundle ESM source code that exists on Git repository and provides to web browsers.
-Even if specify raw URL of repository to `import`, will be rejected by SOP, so need like this reverse proxy.
+It bundle ESM source code that on Git repository and provide to web browser.
 
-ESM bundler uses [`denoland/deno_emit`](https://github.com/denoland/deno_emit), TypeScript is transpiled when bundled, so can directly specify `.ts` file.
+ESM bundler uses [`denoland/deno_emit`](https://github.com/denoland/deno_emit) and TypeScript is transpiled when bundling so can directly specify `.ts` file.
 
 You can select Git hosting service to connect to when starting server.
-For example, you can connect to an on-premises environment such as GitHub or GitLab within company and build an ESM hosting service for internal use.
+
+For example, connect to on-premise GitHub or GitLab within company and build ESM hosting service for internal use.
 
 This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://deno.land/x).
 
