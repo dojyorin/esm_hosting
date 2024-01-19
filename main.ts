@@ -1,4 +1,4 @@
-import {bundle} from "./deps.ts";
+import {contentType, bundle} from "./deps.ts";
 
 const envTarget = Deno.env.get("ESMH_TARGET") || "https://github.com";
 
@@ -11,7 +11,7 @@ function resCode(code:number){
 function resContent(body:BodyInit, type:string, cors?:boolean){
     return new Response(body, {
         headers: {
-            "Content-Type": type,
+            "Content-Type": contentType(type) ?? "application/octet-stream",
             ...cors && {
                 "Access-Control-Allow-Origin": "*"
             }
@@ -43,11 +43,13 @@ await Deno.serve({
     if(pathname === "/"){
         return resContent(/*html*/`
             <!doctype html>
+            <meta charset="utf-8">
+            <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50%' y='50%' style='dominant-baseline:central;text-anchor:middle;font-size:100px;'>🧩</text></svg>">
             <title>ESM Hosting</title>
             <h1>ESM Hosting</h1>
             <p>See <a href="https://github.com/dojyorin/esm_hosting">GitHub</a> for more info.</p>
             <p>[Target] ${envTarget}</p>
-        `, "text/html");
+        `, "html");
     }
     else if(pathname.startsWith("/x/")){
         const [, owner, repo, ref, path] = pathname.match(/^\/x\/([\w.-]+)\/([\w.-]+)@([\w.-]+)\/([\w./-]+)$/) ?? [];
@@ -61,7 +63,7 @@ await Deno.serve({
                 }
             });
 
-            return resContent(code, "text/javascript", true);
+            return resContent(code, "js", true);
         }
         catch(e){
             console.error(e);
