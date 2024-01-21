@@ -1,6 +1,5 @@
 {
     "name": "esm_hosting",
-
     "services": {
         "server": {
             "image": "dojyorin/deno:latest",
