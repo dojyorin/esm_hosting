@@ -1,6 +1,6 @@
 import {contentType, bundle} from "./deps.ts";
 
-const envTarget = Deno.env.get("ESMH_TARGET") || "https://github.com";
+const envTarget = (v => v || "https://github.com")(Deno.env.get("ESMH_TARGET"));
 
 function resCode(code:number){
     return new Response(undefined, {
@@ -20,7 +20,7 @@ function resContent(body:BodyInit, type:string, cors?:boolean){
 }
 
 await Deno.serve({
-    hostname: Deno.env.get("ESMH_HOST") || "127.0.0.1",
+    hostname: (v => v || "127.0.0.1")(Deno.env.get("ESMH_HOST")),
     port: (v => v ? Number(v) : 3080)(Deno.env.get("ESMH_PORT")),
     key: (v => v && Deno.readTextFileSync(v))(Deno.env.get("ESMH_TLS_KEY")),
     cert: (v => v && Deno.readTextFileSync(v))(Deno.env.get("ESMH_TLS_CERT")),

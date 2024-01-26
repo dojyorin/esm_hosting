@@ -1,4 +1,7 @@
 # **ESM Hosting**
+![actions:release](https://github.com/dojyorin/esm_hosting/actions/workflows/release.yaml/badge.svg)
+![shields:license](https://img.shields.io/github/license/dojyorin/esm_hosting)
+![shields:release](https://img.shields.io/github/release/dojyorin/esm_hosting)
 
 Minimal ESM hosting service.
 
