@@ -1,6 +1,6 @@
-import {contentType, bundle} from "./deps.ts";
+import {bundle} from "https://deno.land/x/emit@0.34.0/mod.ts";
 
-const envTarget = (v => v || "https://github.com")(Deno.env.get("ESMH_TARGET"));
+const esmTarget = (v => v || "https://github.com")(Deno.env.get("ESMH_TARGET"));
 
 function resCode(code:number){
     return new Response(undefined, {
@@ -11,7 +11,7 @@ function resCode(code:number){
 function resContent(body:BodyInit, type:string, cors?:boolean){
     return new Response(body, {
         headers: {
-            "Content-Type": contentType(type) ?? "application/octet-stream",
+            "Content-Type": type,
             ...cors && {
                 "Access-Control-Allow-Origin": "*"
             }
@@ -27,14 +27,17 @@ await Deno.serve({
     onListen({hostname, port}){
         console.info("Server start.");
         console.info("Listen:", `${hostname}:${port}`);
-        console.info("Target:", envTarget);
+        console.info("Target:", esmTarget);
     },
     onError(e){
         console.error(e);
         return resCode(500);
     }
 }, async({method, url})=>{
-    if(method !== "GET"){
+    if(method === "OPTIONS"){
+        return resCode(204);
+    }
+    else if(method !== "GET"){
         return resCode(405);
     }
 
@@ -48,14 +51,14 @@ await Deno.serve({
             <title>ESM Hosting</title>
             <h1>ESM Hosting</h1>
             <p>See <a href="https://github.com/dojyorin/esm_hosting">GitHub</a> for more info.</p>
-            <p>[Target] ${envTarget}</p>
-        `, "html");
+            <p>[Target] ${esmTarget}</p>
+        `, "text/html");
     }
     else if(pathname.startsWith("/x/")){
         const [, owner, repo, ref, path] = pathname.match(/^\/x\/([\w.-]+)\/([\w.-]+)@([\w.-]+)\/([\w./-]+)$/) ?? [];
 
         try{
-            const {code} = await bundle(`${envTarget}/${owner}/${repo}/raw/${ref}/${path}`, {
+            const {code} = await bundle(`${esmTarget}/${owner}/${repo}/raw/${ref}/${path}`, {
                 minify: searchParams.has("minify"),
                 compilerOptions: {
                     inlineSourceMap: searchParams.has("map"),
@@ -63,7 +66,7 @@ await Deno.serve({
                 }
             });
 
-            return resContent(code, "js", true);
+            return resContent(code, "text/javascript", true);
         }
         catch(e){
             console.error(e);
