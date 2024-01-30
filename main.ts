@@ -34,16 +34,13 @@ await Deno.serve({
         return resCode(500);
     }
 }, async({method, url})=>{
-    if(method === "OPTIONS"){
-        return resCode(204);
-    }
-    else if(method !== "GET"){
-        return resCode(405);
-    }
-
     const {pathname, searchParams} = new URL(url);
 
     if(pathname === "/"){
+        if(method !== "GET"){
+            return resCode(405);
+        }
+
         return resContent(/*html*/`
             <!doctype html>
             <meta charset="utf-8">
@@ -55,6 +52,10 @@ await Deno.serve({
         `, "text/html");
     }
     else if(pathname.startsWith("/x/")){
+        if(method !== "GET"){
+            return resCode(405);
+        }
+
         const [, owner, repo, ref, path] = pathname.match(/^\/x\/([\w.-]+)\/([\w.-]+)@([\w.-]+)\/([\w./-]+)$/) ?? [];
 
         try{
