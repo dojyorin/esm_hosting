@@ -32,7 +32,7 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
 
 # Environment
 - `ESMH_HOST` ... Listen hostname.
-    - Default: `127.0.0.1`
+    - Default: `0.0.0.0`
 - `ESMH_PORT` ... Listen port.
     - Default: `3080`
 - `ESMH_TLS_KEY` ... Private key file path when using TLS.
