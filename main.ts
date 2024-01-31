@@ -20,7 +20,7 @@ function resContent(body:BodyInit, type:string, cors?:boolean){
 }
 
 await Deno.serve({
-    hostname: (v => v || "127.0.0.1")(Deno.env.get("ESMH_HOST")),
+    hostname: (v => v || "0.0.0.0")(Deno.env.get("ESMH_HOST")),
     port: (v => v ? Number(v) : 3080)(Deno.env.get("ESMH_PORT")),
     key: (v => v && Deno.readTextFileSync(v))(Deno.env.get("ESMH_TLS_KEY")),
     cert: (v => v && Deno.readTextFileSync(v))(Deno.env.get("ESMH_TLS_CERT")),
@@ -48,7 +48,7 @@ await Deno.serve({
             <title>ESM Hosting</title>
             <h1>ESM Hosting</h1>
             <p>See <a href="https://github.com/dojyorin/esm_hosting">GitHub</a> for more info.</p>
-            <p>[Target] ${esmTarget}</p>
+            <p>[Target] <code>${esmTarget}</code></p>
         `, "text/html");
     }
     else if(pathname.startsWith("/x/")){
