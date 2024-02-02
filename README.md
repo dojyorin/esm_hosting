@@ -6,7 +6,9 @@
 Minimal ESM hosting service.
 
 # Details
-Bundle ESM code located on Git repository and serve to client.
+Serverware for hosting ESM code in Git repositories.
+
+Can be provide TypeScript as is or transpiled to JavaScript and bundled.
 
 ESM bundler uses [`denoland/deno_emit`](https://github.com/denoland/deno_emit) and TypeScript is transpiled when bundling so can directly specify `.ts` file.
 
@@ -43,28 +45,35 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
     - Default: `https://github.com`
 
 # Specification
-### `GET /x/(:owner)/(:repo)@(:ref)/(:path)(?minify)(&map)(&ts)`
+### `GET /x/:owner/:repo@:ref/:path?bundle&minify&map&ts`
 
 **Request**
 
 - Path
-    - `:owner` ... Owner name.
-    - `:repo` ... Repository name.
-    - `:ref` ... Tag name. (or branch name)
-    - `:path` ... Path to file.
+    - `:owner` (required) ... Owner name.
+    - `:repo` (required) ... Repository name.
+    - `:ref` (required) ... Tag name. (or branch name)
+    - `:path` (required) ... Path to file.
 - Query
-    - `minify` (option) ... Minify ESM code.
-    - `map` (option) ... Embed SourceMap.
-    - `ts` (option) ... Embed original TypeScript.
+    - `bundle` (option) ... Transpiled to JavaScript and bundled.
+        - `minify` (option, require `bundle`) ... Minify bundled code.
+        - `map` (option, require `bundle`) ... Embed source map.
+        - `ts` (option, require `bundle`) ... Embed original TypeScript.
 
 **Response**
 
-- Type: `text/javascript`
+- Type: `text/typescript` or `text/javascript` (use `bundle` query.)
 - Body: ESM code.
 
 # Example
-```html
-<script>
-    import * as mod from "http://127.0.0.1:3080/x/dojyorin/deno_simple_utility@v1.0.0/mod.ts";
-</script>
+**in Browser**
+
+```js
+import * as mod from "http://127.0.0.1:3080/x/dojyorin/deno_simple_utility@v2.0.0/mod.pure.ts?bundle&minify";
+```
+
+**in Deno**
+
+```ts
+import * as mod from "http://127.0.0.1:3080/x/dojyorin/deno_simple_utility@v2.0.0/mod.ts";
 ```

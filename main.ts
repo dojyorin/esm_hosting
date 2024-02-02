@@ -1,6 +1,5 @@
-import {bundle} from "https://deno.land/x/emit@0.34.0/mod.ts";
-
-const esmTarget = (v => v || "https://github.com")(Deno.env.get("ESMH_TARGET"));
+import {createCache} from "https://deno.land/x/deno_cache@0.6.3/mod.ts";
+import {bundle} from "https://deno.land/x/emit@0.35.0/mod.ts";
 
 function resCode(code:number){
     return new Response(undefined, {
@@ -19,6 +18,9 @@ function resContent(body:BodyInit, type:string, cors?:boolean){
     });
 }
 
+const pathModule = /^\/x\/([\w.-]+)\/([\w.-]+)@([\w.-]+)\/([\w./-]+)$/;
+const targetHost = (v => v || "https://github.com")(Deno.env.get("ESMH_TARGET"));
+
 await Deno.serve({
     hostname: (v => v || "0.0.0.0")(Deno.env.get("ESMH_HOST")),
     port: (v => v ? Number(v) : 3080)(Deno.env.get("ESMH_PORT")),
@@ -27,7 +29,7 @@ await Deno.serve({
     onListen({hostname, port}){
         console.info("Server start.");
         console.info("Listen:", `${hostname}:${port}`);
-        console.info("Target:", esmTarget);
+        console.info("Target:", targetHost);
     },
     onError(e){
         console.error(e);
@@ -48,18 +50,19 @@ await Deno.serve({
             <title>ESM Hosting</title>
             <h1>ESM Hosting</h1>
             <p>See <a href="https://github.com/dojyorin/esm_hosting">GitHub</a> for more info.</p>
-            <p>[Target] <code>${esmTarget}</code></p>
+            <p>[Target] <code>${targetHost}</code></p>
         `, "text/html");
     }
-    else if(pathname.startsWith("/x/")){
+    else if(pathModule.test(pathname)){
         if(method !== "GET"){
             return resCode(405);
         }
 
-        const [, owner, repo, ref, path] = pathname.match(/^\/x\/([\w.-]+)\/([\w.-]+)@([\w.-]+)\/([\w./-]+)$/) ?? [];
+        const [, owner, repo, ref, path] = pathname.match(pathModule) ?? [];
+        const targetURL = `${targetHost}/${owner}/${repo}/raw/${ref}/${path}`;
 
-        try{
-            const {code} = await bundle(`${esmTarget}/${owner}/${repo}/raw/${ref}/${path}`, {
+        if(searchParams.has("bundle")){
+            const {code} = await bundle(targetURL, {
                 minify: searchParams.has("minify"),
                 compilerOptions: {
                     inlineSourceMap: searchParams.has("map"),
@@ -69,9 +72,13 @@ await Deno.serve({
 
             return resContent(code, "text/javascript", true);
         }
-        catch(e){
-            console.error(e);
-            return resCode(400);
+
+        const response = await createCache().load(targetURL);
+
+        switch(response?.kind){
+            case "module": return resContent(response.content, "text/typescript", true);
+            case "external": return resCode(422);
+            default: return resCode(404);
         }
     }
 
