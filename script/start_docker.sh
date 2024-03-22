@@ -3,5 +3,7 @@ set -eu
 
 cd ${0%/*}
 
-docker-compose -p $(yq -o y '.name' ../docker_compose/main.json) down
-docker-compose -f ../docker_compose/main.json up -d --build
+readonly file=../docker_compose/main.json
+
+docker-compose -p $(yq -o y '.name' ${file}) down
+docker-compose -f ${file} up -d --build
