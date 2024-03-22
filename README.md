@@ -26,10 +26,9 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
 # for Local
 ./script/start_local.sh
 
-# for Local (No verify TLS)
-# Use at your own risk!
+# for Local (No verify TLS, use at your own risk!)
 # Be sure to use for limited purpose. (ex: legacy intranet)
-./script/start_local.sh --unsafe
+./script/start_local.sh --insecure
 ```
 
 # Environment
@@ -37,7 +36,7 @@ This project is inspired by [esm.sh](https://esm.sh) and [deno.land/x](https://d
     - Default: `0.0.0.0`
 - `ESMH_PORT` ... Listen port.
     - Default: `3080`
-- `ESMH_TLS_KEY` ... Private key file path when using TLS.
+- `ESMH_TLS_KEY` ... Key file path when using TLS.
     - Format: PEM
 - `ESMH_TLS_CERT` ... Certificate file path when using TLS.
     - Format: PEM

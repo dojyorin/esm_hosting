@@ -1,5 +1,5 @@
-import {createCache} from "https://deno.land/x/deno_cache@0.6.3/mod.ts";
-import {bundle} from "https://deno.land/x/emit@0.35.0/mod.ts";
+import {createCache} from "https://deno.land/x/deno_cache@0.7.1/mod.ts";
+import {bundle} from "https://deno.land/x/emit@0.38.2/mod.ts";
 
 function resCode(code:number){
     return new Response(undefined, {
@@ -59,10 +59,10 @@ await Deno.serve({
         }
 
         const [, owner, repo, ref, path] = pathname.match(pathModule) ?? [];
-        const targetURL = `${targetHost}/${owner}/${repo}/raw/${ref}/${path}`;
+        const raw = `${targetHost}/${owner}/${repo}/raw/${ref}/${path}`;
 
         if(searchParams.has("bundle")){
-            const {code} = await bundle(targetURL, {
+            const {code} = await bundle(raw, {
                 minify: searchParams.has("minify"),
                 compilerOptions: {
                     inlineSourceMap: searchParams.has("map"),
@@ -73,7 +73,7 @@ await Deno.serve({
             return resContent(code, "text/javascript", true);
         }
 
-        const response = await createCache().load(targetURL);
+        const response = await createCache().load(raw);
 
         switch(response?.kind){
             case "module": return resContent(response.content, "text/typescript", true);
